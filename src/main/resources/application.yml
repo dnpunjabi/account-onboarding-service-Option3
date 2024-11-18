@@ -1,0 +1,7 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: account-onboarding-service
+  config:
+    import: "optional:classpath:/product-config.yml"
