@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OnboardingRequest {
-    private String fkn;
-    private String productCode;
+    private String fkn;           // Customer Identifier (FKN)
+    private String productCode;   // Product Code to be onboarded
+    private boolean simulateFailure = false; // Flag to simulate failure (default: false)
 }
