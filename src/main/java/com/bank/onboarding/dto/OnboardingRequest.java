@@ -8,7 +8,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OnboardingRequest {
-    private String fkn;           // Customer Identifier (FKN)
-    private String productCode;   // Product Code to be onboarded
-    private boolean simulateFailure = false; // Flag to simulate failure (default: false)
+
+    private String transactionId; // Added transaction ID
+    private String fkn;           // Customer identifier
+    private String productCode;   // Product code
+    private String simulateFailure;
+    private String failureTarget;
+    private boolean pinSet;
+    private boolean onlineBankingOptIn;
+    private int customerType;     // 1 = Natural Person, 2 = Legal Entity
 }

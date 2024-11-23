@@ -22,5 +22,4 @@ public class Product {
     private boolean pinActivation;
     private boolean onlineBankingActivation;
 
-    // Getters and Setters
 }

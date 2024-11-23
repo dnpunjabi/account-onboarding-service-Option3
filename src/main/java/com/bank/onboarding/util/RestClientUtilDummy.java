@@ -18,23 +18,42 @@ public class RestClientUtilDummy {
     public RestClientUtilDummy(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
-
-    /**
+/**
      * Simulates a POST request to an upstream API.
-     * If the request payload contains 'simulateFailure': true, it simulates a failure.
+     * If the request payload contains 'simulateFailure' and 'failureTarget', it simulates a specific failure for a specific API.
      */
     public ResponseEntity<String> makePostCall(String url, Map<String, Object> requestPayload) {
         log.info("Simulating POST request to URL: {} with payload: {}", url, requestPayload);
 
-        // Simulate failure based on the 'simulateFailure' flag in the payload
-        if (requestPayload != null && requestPayload.containsKey("simulateFailure") && (Boolean) requestPayload.get("simulateFailure")) {
-            log.error("Simulating API failure for testing");
-            return new ResponseEntity<>("{\"status\": \"error\", \"message\": \"Simulated API failure\"}", HttpStatus.INTERNAL_SERVER_ERROR);
+        // Extract simulateFailure and failureTarget from the payload
+        String simulateFailure = (String) requestPayload.getOrDefault("simulateFailure", "NONE");
+        String failureTarget = (String) requestPayload.getOrDefault("failureTarget", "NONE");
+
+        // Check if the current URL matches the failure target
+        if (failureTarget != null && !failureTarget.equals("NONE") && url.contains(failureTarget)) {
+            switch (simulateFailure) {
+                case "NETWORK_ERROR":
+                    log.error("Simulating network error for API: {}", failureTarget);
+                    return new ResponseEntity<>("{\"status\": \"error\", \"message\": \"Simulated network error for API " + failureTarget + "\"}", HttpStatus.INTERNAL_SERVER_ERROR);
+                case "SERVICE_UNAVAILABLE":
+                    log.error("Simulating service unavailable error for API: {}", failureTarget);
+                    return new ResponseEntity<>("{\"status\": \"error\", \"message\": \"Service temporarily unavailable for API " + failureTarget + "\"}", HttpStatus.SERVICE_UNAVAILABLE);
+                case "BAD_REQUEST":
+                    log.error("Simulating bad request error for API: {}", failureTarget);
+                    return new ResponseEntity<>("{\"status\": \"error\", \"message\": \"Simulated bad request for API " + failureTarget + "\"}", HttpStatus.BAD_REQUEST);
+                default:
+                    log.error("Simulating generic API failure for API: {}", failureTarget);
+                    return new ResponseEntity<>("{\"status\": \"error\", \"message\": \"Simulated API failure for " + failureTarget + "\"}", HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
 
         // Simulated Success Responses
-        if (url.contains("onboard")) {
-            log.info("Simulating successful onboarding response");
+
+        if (url.contains("schufa-check")) {
+            log.info("Simulating SCHUFA Check API call...");
+            return new ResponseEntity<>("{\"status\": \"success\", \"message\": \"SCHUFA Check passed successfully\"}", HttpStatus.OK);
+        } else if (url.contains("account-opening")) {
+            log.info("Simulating successful account opening response");
             return new ResponseEntity<>("{\"status\": \"success\", \"message\": \"Onboarding successful\"}", HttpStatus.OK);
         } else if (url.contains("activate-pin")) {
             log.info("Simulating successful PIN activation response");
@@ -50,7 +69,7 @@ public class RestClientUtilDummy {
 
     /**
      * Simulates a POST request to Orinoco Case Management API.
-     * 
+     *
      * @param url The URL to call.
      * @param casePayload The payload containing case details.
      * @return A ResponseEntity simulating the Orinoco API response (success or failure).

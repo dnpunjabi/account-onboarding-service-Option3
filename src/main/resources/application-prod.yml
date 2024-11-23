@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://<PROD_HOST>:<PROD_PORT>/prod_db  # Change to your production database
+    username: prod_user                                     # Change to your production username
+    password: prod_password                                 # Change to your production password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate                                   # Validate the schema against entities
+    show-sql: false                                       # Don't show SQL queries in production
+    properties:
+      hibernate:
+        format_sql: false                                  # Disable formatting in production
+  datasource.hikari:
+    maximum-pool-size: 20
+    connection-timeout: 30000
+    idle-timeout: 300000
+    max-lifetime: 1800000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info                              # Expose health and info endpoints
+  health:
+    db:
+      enabled: true
+
+# Optional: Enable production-specific logging
+logging:
+  level:
+    com.bank.onboarding: INFO                            # Set logging level for your application

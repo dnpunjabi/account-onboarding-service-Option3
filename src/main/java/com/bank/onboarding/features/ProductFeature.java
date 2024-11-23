@@ -1,5 +1,7 @@
 package com.bank.onboarding.features;
 
+import java.util.Map;
+
 public interface ProductFeature {
-    void execute(String fkn, String productCode, boolean simulateFailure) throws Exception;
+    void execute(Map<String, Object> requestContext) throws Exception;
 }

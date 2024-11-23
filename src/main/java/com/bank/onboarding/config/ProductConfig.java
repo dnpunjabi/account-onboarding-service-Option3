@@ -22,7 +22,8 @@ public class ProductConfig {
 
     @Data
     public static class Features {
-        private Boolean onboarding;
+        private Boolean schufa;
+        private Boolean accountOpening;
         private Boolean pinActivation;
         private Boolean onlineBankingActivation;
     }

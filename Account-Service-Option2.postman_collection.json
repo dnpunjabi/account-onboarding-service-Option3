@@ -1,0 +1,1297 @@
+{
+	"info": {
+		"_postman_id": "9b776f9b-79ed-4643-b37d-739b54723c73",
+		"name": "Account-Service-Option2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39796714"
+	},
+	"item": [
+		{
+			"name": "Successful",
+			"item": [
+				{
+					"name": "Natural Person with SCHUFA Check",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"transactionId\": \"TXN00001111\",\r\n    \"fkn\": \"NP67890\",\r\n    \"productCode\": \"BCA\",\r\n    \"simulateFailure\": \"NONE\",\r\n    \"failureTarget\": \"NONE\",\r\n    \"pinSet\": true,\r\n    \"onlineBankingOptIn\": true,\r\n    \"customerType\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products/onboard",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"onboard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Natural Person without PIN Activation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"transactionId\": \"TXN999999\",\r\n    \"fkn\": \"NP12345\",\r\n    \"productCode\": \"BCA\",\r\n    \"simulateFailure\": \"NONE\",\r\n    \"failureTarget\": \"NONE\",\r\n    \"pinSet\": false,\r\n    \"onlineBankingOptIn\": true,\r\n    \"customerType\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products/onboard",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"onboard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Successful Flow for Legal Entity",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"transactionId\": \"TXN111111\",\r\n    \"fkn\": \"LE56789\",\r\n    \"productCode\": \"BCA\",\r\n    \"simulateFailure\": \"NONE\",\r\n    \"failureTarget\": \"NONE\",\r\n    \"pinSet\": false,\r\n    \"onlineBankingOptIn\": true,\r\n    \"customerType\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products/onboard",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"onboard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Successful SCHUFA Check Only",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"transactionId\": \"TXN5555555\",\r\n    \"fkn\": \"NP56789\",\r\n    \"productCode\": \"DEF\",\r\n    \"simulateFailure\": \"NONE\",\r\n    \"failureTarget\": \"NONE\",\r\n    \"pinSet\": false,\r\n    \"onlineBankingOptIn\": false,\r\n    \"customerType\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products/onboard",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"onboard"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Failure Simulations",
+			"item": [
+				{
+					"name": "Simulated BAD_REQUEST for Account Opening",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"transactionId\": \"TXN2222222\",\r\n    \"fkn\": \"NP67890\",\r\n    \"productCode\": \"BCA\",\r\n    \"simulateFailure\": \"BAD_REQUEST\",\r\n    \"failureTarget\": \"account-opening\",\r\n    \"pinSet\": false,\r\n    \"onlineBankingOptIn\": true,\r\n    \"customerType\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products/onboard",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"onboard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Simulated BAD_REQUEST for SCHUFA Check",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"transactionId\": \"TXN3333333\",\r\n    \"fkn\": \"NP67890\",\r\n    \"productCode\": \"BCA\",\r\n    \"simulateFailure\": \"BAD_REQUEST\",\r\n    \"failureTarget\": \"schufa-check\",\r\n    \"pinSet\": true,\r\n    \"onlineBankingOptIn\": true,\r\n    \"customerType\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products/onboard",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"onboard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Simulated NETWORK_ERROR for Account Opening",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"transactionId\": \"TXN44444444\",\r\n    \"fkn\": \"NP6111999\",\r\n    \"productCode\": \"BCA\",\r\n    \"simulateFailure\": \"NETWORK_ERROR\",\r\n    \"failureTarget\": \"account-opening\",\r\n    \"pinSet\": true,\r\n    \"onlineBankingOptIn\": true,\r\n    \"customerType\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products/onboard",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"onboard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Simulated SERVICE_UNAVAILABLE for Online Banking Activation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"transactionId\": \"TXN55555555\",\r\n    \"fkn\": \"NP67890\",\r\n    \"productCode\": \"BCA\",\r\n    \"simulateFailure\": \"SERVICE_UNAVAILABLE\",\r\n    \"failureTarget\": \"activate-online-banking\",\r\n    \"pinSet\": true,\r\n    \"onlineBankingOptIn\": true,\r\n    \"customerType\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products/onboard",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"onboard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Simulated BAD_REQUEST for PIN Activation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"transactionId\": \"TXN66666666\",\r\n    \"fkn\": \"NP67890\",\r\n    \"productCode\": \"BCA\",\r\n    \"simulateFailure\": \"BAD_REQUEST\",\r\n    \"failureTarget\": \"activate-pin\",\r\n    \"pinSet\": true,\r\n    \"onlineBankingOptIn\": false,\r\n    \"customerType\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products/onboard",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"onboard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Simulated Failure for Legal Entity",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"transactionId\": \"TXN88888888\",\r\n    \"fkn\": \"LE56789\",\r\n    \"productCode\": \"BCA\",\r\n    \"simulateFailure\": \"NETWORK_ERROR\",\r\n    \"failureTarget\": \"account-opening\",\r\n    \"pinSet\": false,\r\n    \"onlineBankingOptIn\": true,\r\n    \"customerType\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products/onboard",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"onboard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Simulated Failure with Unknown Endpoint",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"transactionId\": \"TXN77777777\",\r\n    \"fkn\": \"NP67890\",\r\n    \"productCode\": \"BCA\",\r\n    \"simulateFailure\": \"BAD_REQUEST\",\r\n    \"failureTarget\": \"unknown-endpoint\",\r\n    \"pinSet\": false,\r\n    \"onlineBankingOptIn\": true,\r\n    \"customerType\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products/onboard",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"onboard"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product Configuration",
+			"item": [
+				{
+					"name": "Product Config",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/products/config",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"config"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API Logs",
+			"item": [
+				{
+					"name": "Search by fkn",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Transaction ID</th>\r",
+									"        <th>Feature Name</th>\r",
+									"        <th>FKN</th>\r",
+									"        <th>Product Code</th>\r",
+									"        <th>HTTP Status</th>\r",
+									"        <th>Request Payload</th>\r",
+									"        <th>Response Body</th>\r",
+									"        <th>Created At</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr id=row_{{@key}}>\r",
+									"            <td>{{id}}</td>\r",
+									"            <td>{{transactionId}}</td>\r",
+									"            <td>{{featureName}}</td>\r",
+									"            <td>{{fkn}}</td>\r",
+									"            <td>{{productCode}}</td>\r",
+									"            <td>{{httpStatus}}</td>\r",
+									"            <td>{{requestPayload}}</td>\r",
+									"            <td>{{responseBody}}</td>\r",
+									"            <td>{{createdAt}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    var vizData = pm.response.json();\r",
+									"\r",
+									"    return {response: vizData}\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate the schema for each log object in the response\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"    responseData.forEach(function(log) {\r",
+									"        pm.expect(log).to.have.property('id').that.is.a('number');\r",
+									"        pm.expect(log).to.have.property('transactionId').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('featureName').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('fkn').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('productCode').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('httpStatus').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('requestPayload').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('responseBody').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('createdAt').that.is.a('string');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/call-logs?transactionId=&fkn=NP67890&featureName=&fromDate=&toDate=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"call-logs"
+							],
+							"query": [
+								{
+									"key": "transactionId",
+									"value": ""
+								},
+								{
+									"key": "fkn",
+									"value": "NP67890"
+								},
+								{
+									"key": "featureName",
+									"value": ""
+								},
+								{
+									"key": "fromDate",
+									"value": ""
+								},
+								{
+									"key": "toDate",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search by Transaction Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Transaction ID</th>\r",
+									"        <th>Feature Name</th>\r",
+									"        <th>FKN</th>\r",
+									"        <th>Product Code</th>\r",
+									"        <th>HTTP Status</th>\r",
+									"        <th>Request Payload</th>\r",
+									"        <th>Response Body</th>\r",
+									"        <th>Created At</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr id=row_{{@key}}>\r",
+									"            <td>{{id}}</td>\r",
+									"            <td>{{transactionId}}</td>\r",
+									"            <td>{{featureName}}</td>\r",
+									"            <td>{{fkn}}</td>\r",
+									"            <td>{{productCode}}</td>\r",
+									"            <td>{{httpStatus}}</td>\r",
+									"            <td>{{requestPayload}}</td>\r",
+									"            <td>{{responseBody}}</td>\r",
+									"            <td>{{createdAt}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    var vizData = pm.response.json();\r",
+									"\r",
+									"    return {response: vizData}\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate the schema for each log object in the response\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"    responseData.forEach(function(log) {\r",
+									"        pm.expect(log).to.have.property('id').that.is.a('number');\r",
+									"        pm.expect(log).to.have.property('transactionId').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('featureName').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('fkn').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('productCode').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('httpStatus').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('requestPayload').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('responseBody').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('createdAt').that.is.a('string');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/call-logs?transactionId=TXN66666666&fkn=&featureName=&fromDate=&toDate=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"call-logs"
+							],
+							"query": [
+								{
+									"key": "transactionId",
+									"value": "TXN66666666"
+								},
+								{
+									"key": "fkn",
+									"value": ""
+								},
+								{
+									"key": "featureName",
+									"value": ""
+								},
+								{
+									"key": "fromDate",
+									"value": ""
+								},
+								{
+									"key": "toDate",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search by Feature Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Transaction ID</th>\r",
+									"        <th>Feature Name</th>\r",
+									"        <th>FKN</th>\r",
+									"        <th>Product Code</th>\r",
+									"        <th>HTTP Status</th>\r",
+									"        <th>Request Payload</th>\r",
+									"        <th>Response Body</th>\r",
+									"        <th>Created At</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr id=row_{{@key}}>\r",
+									"            <td>{{id}}</td>\r",
+									"            <td>{{transactionId}}</td>\r",
+									"            <td>{{featureName}}</td>\r",
+									"            <td>{{fkn}}</td>\r",
+									"            <td>{{productCode}}</td>\r",
+									"            <td>{{httpStatus}}</td>\r",
+									"            <td>{{requestPayload}}</td>\r",
+									"            <td>{{responseBody}}</td>\r",
+									"            <td>{{createdAt}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    var vizData = pm.response.json();\r",
+									"\r",
+									"    return {response: vizData}\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate the schema for each log object in the response\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"    responseData.forEach(function(log) {\r",
+									"        pm.expect(log).to.have.property('id').that.is.a('number');\r",
+									"        pm.expect(log).to.have.property('transactionId').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('featureName').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('fkn').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('productCode').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('httpStatus').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('requestPayload').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('responseBody').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('createdAt').that.is.a('string');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/call-logs?transactionId=&fkn=&featureName=schufa-check&fromDate=&toDate=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"call-logs"
+							],
+							"query": [
+								{
+									"key": "transactionId",
+									"value": ""
+								},
+								{
+									"key": "fkn",
+									"value": ""
+								},
+								{
+									"key": "featureName",
+									"value": "schufa-check"
+								},
+								{
+									"key": "fromDate",
+									"value": ""
+								},
+								{
+									"key": "toDate",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search by Time Duration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Transaction ID</th>\r",
+									"        <th>Feature Name</th>\r",
+									"        <th>FKN</th>\r",
+									"        <th>Product Code</th>\r",
+									"        <th>HTTP Status</th>\r",
+									"        <th>Request Payload</th>\r",
+									"        <th>Response Body</th>\r",
+									"        <th>Created At</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr id=row_{{@key}}>\r",
+									"            <td>{{id}}</td>\r",
+									"            <td>{{transactionId}}</td>\r",
+									"            <td>{{featureName}}</td>\r",
+									"            <td>{{fkn}}</td>\r",
+									"            <td>{{productCode}}</td>\r",
+									"            <td>{{httpStatus}}</td>\r",
+									"            <td>{{requestPayload}}</td>\r",
+									"            <td>{{responseBody}}</td>\r",
+									"            <td>{{createdAt}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    var vizData = pm.response.json();\r",
+									"\r",
+									"    return {response: vizData}\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate the schema for each log object in the response\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"    responseData.forEach(function(log) {\r",
+									"        pm.expect(log).to.have.property('id').that.is.a('number');\r",
+									"        pm.expect(log).to.have.property('transactionId').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('featureName').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('fkn').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('productCode').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('httpStatus').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('requestPayload').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('responseBody').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('createdAt').that.is.a('string');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/call-logs?transactionId=&fkn=&featureName=&fromDate=2024-11-23T00:00:00&toDate=2024-11-23T23:59:59",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"call-logs"
+							],
+							"query": [
+								{
+									"key": "transactionId",
+									"value": ""
+								},
+								{
+									"key": "fkn",
+									"value": ""
+								},
+								{
+									"key": "featureName",
+									"value": ""
+								},
+								{
+									"key": "fromDate",
+									"value": "2024-11-23T00:00:00"
+								},
+								{
+									"key": "toDate",
+									"value": "2024-11-23T23:59:59"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search by FKN and TX id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Transaction ID</th>\r",
+									"        <th>Feature Name</th>\r",
+									"        <th>FKN</th>\r",
+									"        <th>Product Code</th>\r",
+									"        <th>HTTP Status</th>\r",
+									"        <th>Request Payload</th>\r",
+									"        <th>Response Body</th>\r",
+									"        <th>Created At</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr id=row_{{@key}}>\r",
+									"            <td>{{id}}</td>\r",
+									"            <td>{{transactionId}}</td>\r",
+									"            <td>{{featureName}}</td>\r",
+									"            <td>{{fkn}}</td>\r",
+									"            <td>{{productCode}}</td>\r",
+									"            <td>{{httpStatus}}</td>\r",
+									"            <td>{{requestPayload}}</td>\r",
+									"            <td>{{responseBody}}</td>\r",
+									"            <td>{{createdAt}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    var vizData = pm.response.json();\r",
+									"\r",
+									"    return {response: vizData}\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate the schema for each log object in the response\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"    responseData.forEach(function(log) {\r",
+									"        pm.expect(log).to.have.property('id').that.is.a('number');\r",
+									"        pm.expect(log).to.have.property('transactionId').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('featureName').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('fkn').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('productCode').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('httpStatus').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('requestPayload').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('responseBody').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('createdAt').that.is.a('string');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/call-logs?transactionId=TXN77777777&fkn=NP67890&featureName=&fromDate=&toDate=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"call-logs"
+							],
+							"query": [
+								{
+									"key": "transactionId",
+									"value": "TXN77777777"
+								},
+								{
+									"key": "fkn",
+									"value": "NP67890"
+								},
+								{
+									"key": "featureName",
+									"value": ""
+								},
+								{
+									"key": "fromDate",
+									"value": ""
+								},
+								{
+									"key": "toDate",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search by all Parameters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Transaction ID</th>\r",
+									"        <th>Feature Name</th>\r",
+									"        <th>FKN</th>\r",
+									"        <th>Product Code</th>\r",
+									"        <th>HTTP Status</th>\r",
+									"        <th>Request Payload</th>\r",
+									"        <th>Response Body</th>\r",
+									"        <th>Created At</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr id=row_{{@key}}>\r",
+									"            <td>{{id}}</td>\r",
+									"            <td>{{transactionId}}</td>\r",
+									"            <td>{{featureName}}</td>\r",
+									"            <td>{{fkn}}</td>\r",
+									"            <td>{{productCode}}</td>\r",
+									"            <td>{{httpStatus}}</td>\r",
+									"            <td>{{requestPayload}}</td>\r",
+									"            <td>{{responseBody}}</td>\r",
+									"            <td>{{createdAt}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    var vizData = pm.response.json();\r",
+									"\r",
+									"    return {response: vizData}\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate the schema for each log object in the response\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"    responseData.forEach(function(log) {\r",
+									"        pm.expect(log).to.have.property('id').that.is.a('number');\r",
+									"        pm.expect(log).to.have.property('transactionId').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('featureName').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('fkn').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('productCode').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('httpStatus').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('requestPayload').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('responseBody').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('createdAt').that.is.a('string');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/call-logs?transactionId=TXN123456&fkn=NP67890&featureName=schufa-check&fromDate=2024-11-22T00:00:00&toDate=2024-11-23T23:59:59",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"call-logs"
+							],
+							"query": [
+								{
+									"key": "transactionId",
+									"value": "TXN123456"
+								},
+								{
+									"key": "fkn",
+									"value": "NP67890"
+								},
+								{
+									"key": "featureName",
+									"value": "schufa-check"
+								},
+								{
+									"key": "fromDate",
+									"value": "2024-11-22T00:00:00"
+								},
+								{
+									"key": "toDate",
+									"value": "2024-11-23T23:59:59"
+								}
+							]
+						},
+						"description": "# API Call Logs\n\nThis endpoint retrieves call logs based on the provided query parameters.\n\n## Request\n\n### Query Parameters\n\n- `transactionId` (optional): The transaction ID for filtering call logs.\n    \n- `fkn`: The FKN for filtering call logs.\n    \n- `featureName`: The feature name for filtering call logs.\n    \n- `fromDate`: The start date and time for filtering call logs.\n    \n- `toDate`: The end date and time for filtering call logs.\n    \n\n### Example\n\n``` http\nGET http://localhost:8080/api/call-logs?transactionId=&fkn=NP67890&featureName=schufa-check&fromDate=2024-11-22T00:00:00&toDate=2024-11-23T23:59:59\n\n ```\n\n## Response\n\n### Status\n\n- `200 OK`: The request was successful.\n    \n\n### Headers\n\n- `Content-Type`: application/json\n    \n\n### Body\n\nThe response body is a JSON array containing call log objects with the following attributes:\n\n- `id`: The ID of the call log.\n    \n- `transactionId`: The transaction ID associated with the call log.\n    \n- `featureName`: The feature name associated with the call log.\n    \n- `fkn`: The FKN associated with the call log.\n    \n- `productCode`: The product code associated with the call log.\n    \n- `httpStatus`: The HTTP status associated with the call log.\n    \n- `requestPayload`: The request payload associated with the call log.\n    \n- `responseBody`: The response body associated with the call log.\n    \n- `createdAt`: The timestamp indicating when the call log was created.\n    \n\n### Example Response\n\n``` json\n[\n    {\n        \"id\": 0,\n        \"transactionId\": \"\",\n        \"featureName\": \"\",\n        \"fkn\": \"\",\n        \"productCode\": \"\",\n        \"httpStatus\": \"\",\n        \"requestPayload\": \"\",\n        \"responseBody\": \"\",\n        \"createdAt\": \"\"\n    }\n]\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Search without any Para",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Transaction ID</th>\r",
+									"        <th>Feature Name</th>\r",
+									"        <th>FKN</th>\r",
+									"        <th>Product Code</th>\r",
+									"        <th>HTTP Status</th>\r",
+									"        <th>Request Payload</th>\r",
+									"        <th>Response Body</th>\r",
+									"        <th>Created At</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr id=row_{{@key}}>\r",
+									"            <td>{{id}}</td>\r",
+									"            <td>{{transactionId}}</td>\r",
+									"            <td>{{featureName}}</td>\r",
+									"            <td>{{fkn}}</td>\r",
+									"            <td>{{productCode}}</td>\r",
+									"            <td>{{httpStatus}}</td>\r",
+									"            <td>{{requestPayload}}</td>\r",
+									"            <td>{{responseBody}}</td>\r",
+									"            <td>{{createdAt}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    var vizData = pm.response.json();\r",
+									"\r",
+									"    return {response: vizData}\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate the schema for each log object in the response\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"    responseData.forEach(function(log) {\r",
+									"        pm.expect(log).to.have.property('id').that.is.a('number');\r",
+									"        pm.expect(log).to.have.property('transactionId').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('featureName').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('fkn').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('productCode').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('httpStatus').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('requestPayload').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('responseBody').that.is.a('string');\r",
+									"        pm.expect(log).to.have.property('createdAt').that.is.a('string');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/call-logs?transactionId=&fkn=&featureName=&fromDate=&toDate=2024-11-23T23:59:59",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"call-logs"
+							],
+							"query": [
+								{
+									"key": "transactionId",
+									"value": ""
+								},
+								{
+									"key": "fkn",
+									"value": ""
+								},
+								{
+									"key": "featureName",
+									"value": ""
+								},
+								{
+									"key": "fromDate",
+									"value": ""
+								},
+								{
+									"key": "toDate",
+									"value": "2024-11-23T23:59:59"
+								}
+							]
+						},
+						"description": "# API Call Logs\n\nThis endpoint retrieves call logs based on the provided query parameters.\n\n## Request\n\n### Query Parameters\n\n- `transactionId` (optional): The transaction ID for filtering call logs.\n    \n- `fkn`: The FKN for filtering call logs.\n    \n- `featureName`: The feature name for filtering call logs.\n    \n- `fromDate`: The start date and time for filtering call logs.\n    \n- `toDate`: The end date and time for filtering call logs.\n    \n\n### Example\n\n``` http\nGET http://localhost:8080/api/call-logs?transactionId=&fkn=NP67890&featureName=schufa-check&fromDate=2024-11-22T00:00:00&toDate=2024-11-23T23:59:59\n\n ```\n\n## Response\n\n### Status\n\n- `200 OK`: The request was successful.\n    \n\n### Headers\n\n- `Content-Type`: application/json\n    \n\n### Body\n\nThe response body is a JSON array containing call log objects with the following attributes:\n\n- `id`: The ID of the call log.\n    \n- `transactionId`: The transaction ID associated with the call log.\n    \n- `featureName`: The feature name associated with the call log.\n    \n- `fkn`: The FKN associated with the call log.\n    \n- `productCode`: The product code associated with the call log.\n    \n- `httpStatus`: The HTTP status associated with the call log.\n    \n- `requestPayload`: The request payload associated with the call log.\n    \n- `responseBody`: The response body associated with the call log.\n    \n- `createdAt`: The timestamp indicating when the call log was created.\n    \n\n### Example Response\n\n``` json\n[\n    {\n        \"id\": 0,\n        \"transactionId\": \"\",\n        \"featureName\": \"\",\n        \"fkn\": \"\",\n        \"productCode\": \"\",\n        \"httpStatus\": \"\",\n        \"requestPayload\": \"\",\n        \"responseBody\": \"\",\n        \"createdAt\": \"\"\n    }\n]\n\n ```"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health Check Endpoints",
+			"item": [
+				{
+					"name": "/health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/actuator/health",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

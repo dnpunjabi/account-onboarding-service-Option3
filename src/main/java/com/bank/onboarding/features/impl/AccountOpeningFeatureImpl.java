@@ -17,15 +17,15 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class PinActivationFeatureImpl implements ProductFeature {
+public class AccountOpeningFeatureImpl implements ProductFeature {
 
     private final RestClientUtilDummy restClientUtil;
-    private final ApiCallLogService apiCallLogService; // Inject the AuditLogService
+    private final ApiCallLogService apiCallLogService;
 
     ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
-    public PinActivationFeatureImpl(RestClientUtilDummy restClientUtil, ApiCallLogService apiCallLogService) {
+    public AccountOpeningFeatureImpl(RestClientUtilDummy restClientUtil, ApiCallLogService apiCallLogService) {
         this.restClientUtil = restClientUtil;
         this.apiCallLogService = apiCallLogService;
     }
@@ -35,7 +35,6 @@ public class PinActivationFeatureImpl implements ProductFeature {
         String transactionId = (String) requestContext.get("transactionId");
         String fkn = (String) requestContext.get("fkn");
         String productCode = (String) requestContext.get("productCode");
-        boolean pinSet = (boolean) requestContext.getOrDefault("pinSet", false);
         // Using Optional (preferred for null safety):
         String simulateFailure = Optional.ofNullable(requestContext.get("simulateFailure"))
                                         .map(String::valueOf)  // Convert to String if present
@@ -45,47 +44,46 @@ public class PinActivationFeatureImpl implements ProductFeature {
                                         .map(String::valueOf)
                                         .orElse("NONE");
 
+        String url = "https://upstream.api/account-opening?fkn=" + fkn + "&productCode=" + productCode;
 
-        String url = "https://upstream.api/activate-pin?fkn=" + fkn + "&productCode=" + productCode;
-
-        // Build the custom payload for the PIN Activation API
+        // Build the custom payload for the Onboarding API
         Map<String, Object> payload = new HashMap<>();
         payload.put("transactionId", transactionId);
         payload.put("fkn", fkn);
         payload.put("productCode", productCode);
-        payload.put("pinSet", pinSet);  // Coming from requestContext
-        payload.put("activationChannel", "mobile");  // Constant value
+        payload.put("customerType", requestContext.get("customerType"));  // Example of adding customer type
+        payload.put("channel", "digital-banking");  // Constant field
         payload.put("simulateFailure", simulateFailure);  // Derived from request context
         payload.put("failureTarget", failureTarget);  // Derived from request context
         // Add any derived fields if necessary (for example, onboarding calculated values)
-               // Derived fields, e.g., activation timestamp
-        //payload.put("activationTimestamp", System.currentTimeMillis());
+        //payload.put("timestamp", System.currentTimeMillis());  // Example of adding a derived field
 
         // Send the payload in the API call
         ResponseEntity<String> response = restClientUtil.makePostCall(url, payload);
 
         String jsonString = objectMapper.writeValueAsString(payload);
         // Log the response in the database
-
         apiCallLogService.logApiResponse(
-                transactionId,
-                "activate-pin",
-                fkn,
-                productCode,
-                response.getStatusCode().toString(),
-                jsonString,
-                response.getBody()
+            transactionId,
+            "account-opening",
+            fkn,
+            productCode,
+            response.getStatusCode().toString(),
+            jsonString,
+            response.getBody()
         );
 
-        if (!response.getStatusCode().is2xxSuccessful()) {
-            throw new RuntimeException("PIN Activation failed for productCode: " + productCode +
-            ", transactionId: " + transactionId +
-            ", fkn: " + fkn +
-            " with status: " + response.getStatusCode());
-}
 
-            // Log success
-            log.info("PIN Activation completed successfully for product: {}, transactionId: {}, fkn: {}",
-            productCode, transactionId, fkn);
-            }
+        // Handle non-successful responses
+        if (!response.getStatusCode().is2xxSuccessful()) {
+            throw new RuntimeException("Account Opening failed for productCode: " + productCode +
+                              ", transactionId: " + transactionId +
+                              ", fkn: " + fkn +
+                              " with status: " + response.getStatusCode());
+       }
+
+       // Log success
+       log.info("Account Opening completed successfully for product: {}, transactionId: {}, fkn: {}",
+                productCode, transactionId, fkn);
+   }
 }
