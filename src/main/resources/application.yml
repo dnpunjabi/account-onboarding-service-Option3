@@ -4,8 +4,6 @@ server:
 spring:
   application:
     name: account-onboarding-service
-  config:
-    import: "optional:classpath:/product-config.yml"
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres  # Change to your dev database
     username: postgres                             # Change to your dev username
