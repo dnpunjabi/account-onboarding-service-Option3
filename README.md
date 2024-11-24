@@ -1,62 +1,69 @@
-# Account Onboarding Service
+# Account Onboarding Service - Strategy Comparison
 
-## Comparison of Onboarding Strategies
+This document compares three strategies for implementing the account onboarding service, considering factors like maintainability, flexibility, and scalability.
 
-This document compares two strategies for account onboarding: a feature-based approach and a service factory approach based on customer and product types.
+## Comparison Table
 
-<style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-baqh{text-align:center;vertical-align:top}
-.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
-.tg .tg-fymr{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
-.tg .tg-high{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top;color:green;}
-.tg .tg-medium{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top;color:orange;}
-.tg .tg-moderate{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top;color:blue;}
-.tg .tg-low{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top;color:red;}
+| Feature | Option 1: Feature-Based Strategy | Option 2: Service Factory by Customer & Product Type | Option 3: Specific Customer-Product Services |
+|---|---|---|---|
+| **Approach** | Each feature is a separate strategy. Runtime checks determine customer type and product. | Services handle multiple product types for specific customer types. Features are called within these services. | Dedicated service classes for each unique customer-product combination (e.g., `NaturalPersonCurrentAccountService`). |
+| **Pros** | * **Modular Features:** Promotes code reusability and independent feature development.<br>* **Easy Feature Addition:** Simplifies adding new features without modifying existing ones.<br>* **Runtime Flexibility:** Adapts to various customer-product combinations dynamically. | * **Clear Separation:** Organizes logic by customer type, improving clarity.<br>* **Reduced Logic:** Less conditional logic compared to the feature-based approach.<br>* **Maintainability:** Centralized customer type logic simplifies maintenance.<br>* **Extensible:** Easily add services for new customer types. | * **Explicit Implementation:** Crystal-clear, purpose-built services for each combination.<br>* **No Runtime Logic:** Eliminates runtime conditional checks, improving performance.<br>* **Maximum Flexibility:** Highly adaptable to complex, specific business rules.<br>* **Maintainability:** Focused services are easier to understand and maintain.<br>* **Granular Control:**  Fine-grained separation of concerns. |
+| **Cons** | * **Complex Logic:**  Feature complexity increases with more customer-product combinations.<br>* **Code Duplication:** Potential for duplicated logic across features.<br>* **Maintainability Challenge:** Harder to maintain as conditions grow.<br>* **Lack of Clarity:** Less explicit handling of specific combinations. | * **Broader Services:** Services might become less focused as they handle multiple product types.<br>* **Reduced Granularity:** Less control over specific product-customer interactions. | * **Numerous Classes:**  Can lead to a large number of service classes.<br>* **Initial Setup:** Requires more upfront setup and boilerplate code.<br>* **Potential Duplication:**  Possible code duplication across similar services (mitigate with shared base classes or utilities). |
+
+
+
+## Getting Started (Optional)
+
+See the [Getting Started Guide](./GETTING_STARTED.md) for project setup instructions.
+
+## Further Information (Optional)
+
+Refer to these resources for more details:
+
+* [Apache Maven Documentation](https://maven.apache.org/guides/index.html)
+* [Spring Boot Documentation](https://spring.io/projects/spring-boot)
+* [Spring Data JPA Documentation](https://spring.io/projects/spring-data-jpa)
+
+
+
+<style>
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ccc; /* Light gray border */
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ccc; /* Light gray border */
+}
+
+th {
+  background-color: #f0f0f5; /* Very light gray background */
+  font-weight: bold;
+}
+
+/* Style for code elements */
+code {
+  background-color: #f8f8f8; /* Lighter background for code */
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+/* Highlight pros in green */
+td ul li:before {
+    content: '• ';
+    color: green;
+}
+
+/* Highlight cons in red */
+.tg td:nth-child(4) ul li:before,  .tg td:nth-child(3) ul li:before,  .tg td:nth-child(2) ul li:before {
+    content: '• ';
+    color: red;
+}
+
 
 </style>
-<table class="tg">
-<thead>
-  <tr>
-    <th class="tg-fymr">Criteria</th>
-    <th class="tg-fymr">Feature-Based Strategy (Current Approach)</th>
-    <th class="tg-fymr">Service Factory Based on Customer &amp; Product Types (Alternative)</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td class="tg-0pky">Modularity</td>
-    <td class="tg-high">High: Each feature is modular and independent.</td>
-    <td class="tg-medium">Medium: Each service is modular, but features are grouped within the service.</td>
-  </tr>
-  <tr>
-    <td class="tg-0pky">Flexibility</td>
-    <td class="tg-high">High: Dynamically handles different customer and product types at the feature level.</td>
-    <td class="tg-high">High: Each service implementation is tailored to a specific customer/product type combination.</td>
-  </tr>
-  <tr>
-    <td class="tg-0pky">Maintainability</td>
-    <td class="tg-medium">Medium: Complexity increases as conditions are added within features.</td>
-    <td class="tg-high">High: Simplified logic due to service focus on specific combinations.</td>
-  </tr>
-  <tr>
-    <td class="tg-0pky">Adaptability</td>
-    <td class="tg-high">High: Easily add new features via new strategy implementations.</td>
-    <td class="tg-high">High: Easily add new services for new customer-product combinations.</td>
-  </tr>
-  <tr>
-    <td class="tg-0pky">Code Duplication</td>
-    <td class="tg-medium">Medium: Risk of logic duplication as feature conditions grow.</td>
-    <td class="tg-low">Low: Combination-specific logic is isolated in separate services.</td>
-  </tr>
-  <tr>
-    <td class="tg-0pky">Scalability</td>
-    <td class="tg-moderate">Moderate: Increased feature complexity with new customer-product combinations.</td>
-    <td class="tg-high">High: Add services for new combinations, maintaining simple service logic.</td>
-  </tr>
-</tbody>
-</table>
+
